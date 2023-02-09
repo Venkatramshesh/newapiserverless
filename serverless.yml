@@ -1,0 +1,25 @@
+service: serverless-news
+configValidationMode: warn
+
+provider:
+    name: aws
+    runtime: python3.7
+
+
+plugins:
+    - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: false
+
+
+functions:
+    newslanapi:
+        handler: handler.news
+        events:
+            - http:
+                path: newslanapi/{lan}
+                method: get
+        environment: ${file(environment_variables.json)}
+
